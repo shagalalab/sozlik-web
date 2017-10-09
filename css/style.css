@@ -1,0 +1,134 @@
+body, html {
+	height: 100%;
+	color: #6d6d6d;
+}
+a {
+	color: #17C3B9;
+}
+a:hover {
+	color: #17C3B9;
+}
+.main {
+	background: #17C3B9;
+	padding: 160px 0;
+}
+.main a {
+	color: #fff;
+	opacity: .7;
+}
+.main a:hover {
+	color: #fff;
+	opacity: 1;
+}
+.page-text {
+	text-align: center;
+	color: #fff;
+}
+
+.page-text .rotate {
+	font-size: 7em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+	margin-top: 0px;
+}
+.page-text span {
+	font-size: 22px;
+	text-transform: uppercase;
+}
+.search-form-container {
+	margin: 80px 0 50px;
+}
+.search-form-container input[type="text"] {
+	width: 60%;
+	padding: 14px 60px 15px 30px;
+	border: none;
+	color: #17C3B9;
+	font-size: 18px;
+	-webkit-border-radius: 45px;
+	-moz-border-radius: 45px;
+	-o-border-radius: 45px;
+	border-radius: 45px;
+}
+.search-form-container input[type="text"]:focus {
+	outline: 0;
+	background: #fff;
+}
+.search-form-container input[type="submit"] {
+	background: #17C3B9;
+	font-size: 16px;
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+	-o-border-radius: 100%;
+	border-radius: 100%;
+	border: none;
+	padding: 11px;
+	left: 10px;
+	margin-left: -66px;
+	position: relative;
+	opacity: .7;
+}
+.search-form-container input[type="submit"]:focus {
+	outline: 0;
+	opacity: 1;
+}
+.search-form-container input[type="submit"]:hover {
+	background: #17C3B9;
+	opacity: 1;
+}
+.footer {
+	margin-top: 20px;
+}
+.social {
+	padding: 0;
+	list-style: none;
+	font-size: 1.3em;
+}
+.social li {
+	float: left;
+	width: 40px;
+	text-align: center;
+	margin-right: 6px;
+	margin-bottom: 6px;
+}
+.social li a i {
+	color: @white;
+	border: 1px solid #17C3B9;
+	padding: 10px 0;
+	display: block;
+	-webkit-border-radius:100%;
+	-moz-border-radius:100%;
+	-ms-border-radius:100%;
+	-o-border-radius:100%;
+	border-radius:100%;
+}
+.social li a i:hover {
+	color: #fff;
+	background: #17C3B9;
+}
+.menu {
+	list-style: none;
+	padding: 0;
+}
+.menu li {
+	float: left;
+	margin: 10px 10px 20px 0px;
+}
+.menu li a {
+	padding: 10px 15px;
+	border: 1px solid #17C3B9;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-ms-border-radius: 20px;
+	-o-border-radius: 20px;
+	border-radius: 20px;
+	text-transform: uppercase;
+}
+.menu li a:hover {
+	background: #17C3B9;
+	color: #fff;
+	text-decoration: none;
+}
+.copyright {
+	margin: 0px 5px 15px;
+	font-size: .9em;
+}
