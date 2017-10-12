@@ -2,7 +2,6 @@ import sqlite3
 from flask import Flask, render_template, g, request, jsonify
 
 app = Flask(__name__)
-app.debug = True
 
 DATABASE = '/Users/atabek/Projects/Flask/sozlik.com/sozlik/sozlik.db'
 
