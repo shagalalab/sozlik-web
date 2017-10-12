@@ -71,10 +71,10 @@
 
 		if (query.length > 1) {
 			if ($('#suggestions-datalist option').filter(function() { return this.value === query; }).length) {
-				window.location.href = "/translate?word=" + query;
+				window.location.href = "/translate/" + query;
 			} else {
 				var options = {};
-				options.url = "/api/suggestion?begins=" + query;
+				options.url = "/api/suggestion/" + query;
 				options.type = "GET";
 				options.dataType = "json";
 				options.success = function (data) {

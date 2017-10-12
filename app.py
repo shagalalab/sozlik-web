@@ -26,37 +26,31 @@ def index():
     return render_template('index.html')
 
 
-# /api/translation?word=adam
-@app.route("/api/translation")
-def api_get_translation():
-    if request.method == 'GET':
-        search_word = request.args.get('word')
-        cur = get_db().cursor()
-        cur.execute("select * from qqen where word = ?", (search_word,))
-        result = cur.fetchone()
-        return jsonify(id=result["id"], word=result["word"], translation=result["translation"])
+# /api/translation/<word>
+@app.route("/api/translation/<search_word>")
+def api_get_translation(search_word):
+    cur = get_db().cursor()
+    cur.execute("select * from qqen where word = ?", (search_word,))
+    result = cur.fetchone()
+    return jsonify(id=result["id"], word=result["word"], translation=result["translation"])
 
 
-# /api/suggestion?begins=a
-@app.route("/api/suggestion")
-def api_get_suggestion():
-    if request.method == 'GET':
-        search_word = request.args.get('begins')
-        cur = get_db().cursor()
-        cur.execute("select word from qqen where word like ? limit 10", (search_word + '%',))
-        result = cur.fetchall()
-        data = []
-        for r in result:
-            data.append(r["word"])
-        return jsonify(suggestions=data)
+# /api/suggestion/<beginswith>
+@app.route("/api/suggestion/<beginswith>")
+def api_get_suggestion(beginswith):
+    cur = get_db().cursor()
+    cur.execute("select word from qqen where word like ? limit 10", (beginswith + '%',))
+    result = cur.fetchall()
+    data = []
+    for r in result:
+        data.append(r["word"])
+    return jsonify(suggestions=data)
 
 
-# /translate?word=adam
-@app.route("/translate")
-def get_translate():
-    if request.method == 'GET':
-        search_word = request.args.get('word')
-        cur = get_db().cursor()
-        cur.execute("select * from qqen where word = ?", (search_word,))
-        result = cur.fetchone()
-        return render_template("translate.html", result=result)
+# /translate/<search_word>
+@app.route("/translate/<search_word>")
+def get_translate(search_word):
+    cur = get_db().cursor()
+    cur.execute("select * from qqen where word = ?", (search_word,))
+    result = cur.fetchone()
+    return render_template("translate.html", result=result)
