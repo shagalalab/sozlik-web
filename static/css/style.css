@@ -5,40 +5,60 @@ body, html {
 a {
 	color: #17C3B9;
 }
+
 a:hover {
 	color: #17C3B9;
 }
+
 .main {
 	background: #17C3B9;
-	padding: 160px 0;
+	padding: 180px 0;
 }
+
 .main a {
 	color: #fff;
 	opacity: .7;
 }
+
 .main a:hover {
 	color: #fff;
 	opacity: 1;
 }
+
+.detail-word {
+	background: #17C3B9;
+	padding: 60px 0;
+}
+
+.detail-translation {
+    text-align: center;
+    background: #FAFAFA;
+	padding: 100px 0;
+    color: #17C3B9;
+}
+
 .page-text {
 	text-align: center;
 	color: #fff;
 }
 
 .page-text .rotate {
-	font-size: 6em;
+	font-size: 5em;
 	text-transform: uppercase;
 	margin-bottom: 10px;
 	margin-top: 0px;
 }
+
 .page-text span {
 	font-size: 22px;
 	text-transform: uppercase;
 }
+
 .search-form-container {
     width: 60%;
     margin: 80px auto 50px auto;
 }
+
 .search-form-container input[type="text"] {
 	width: 98%;
 	padding: 14px 60px 15px 30px;
@@ -50,10 +70,12 @@ a:hover {
 	-o-border-radius: 45px;
 	border-radius: 45px;
 }
+
 .search-form-container input[type="text"]:focus {
 	outline: 0;
 	background: #fff;
 }
+
 .search-form-container input[type="submit"] {
 	background: #17C3B9;
 	font-size: 16px;
@@ -68,22 +90,27 @@ a:hover {
 	position: relative;
 	opacity: .7;
 }
+
 .search-form-container input[type="submit"]:focus {
 	outline: 0;
 	opacity: 1;
 }
+
 .search-form-container input[type="submit"]:hover {
 	background: #17C3B9;
 	opacity: 1;
 }
+
 .footer {
 	margin-top: 20px;
 }
+
 .social {
 	padding: 0;
 	list-style: none;
 	font-size: 1.3em;
 }
+
 .social li {
 	float: left;
 	width: 40px;
@@ -91,6 +118,7 @@ a:hover {
 	margin-right: 6px;
 	margin-bottom: 6px;
 }
+
 .social li a i {
 	color: @white;
 	border: 1px solid #17C3B9;
@@ -102,18 +130,22 @@ a:hover {
 	-o-border-radius:100%;
 	border-radius:100%;
 }
+
 .social li a i:hover {
 	color: #fff;
 	background: #17C3B9;
 }
+
 .menu {
 	list-style: none;
 	padding: 0;
 }
+
 .menu li {
 	float: left;
 	margin: 10px 10px 20px 0px;
 }
+
 .menu li a {
 	padding: 10px 15px;
 	border: 1px solid #17C3B9;
@@ -124,13 +156,15 @@ a:hover {
 	border-radius: 20px;
 	text-transform: uppercase;
 }
+
 .menu li a:hover {
 	background: #17C3B9;
 	color: #fff;
 	text-decoration: none;
 }
+
 .copyright {
-	margin: 0px 5px 15px;
+	margin: 10px 5px 15px;
 	font-size: .9em;
 }
 

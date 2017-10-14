@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-<div>{{result["id"]}}</div>
-<div>{{result["word"]}}</div>
-<div>{{result["translation"]}}</div>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block body %}
+<div class="detail-word">
+    <div class="container page-text">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>{{ word }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="detail-translation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                {{ translation|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

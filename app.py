@@ -53,4 +53,4 @@ def get_translate(search_word):
     cur = get_db().cursor()
     cur.execute("select * from qqen where word = ?", (search_word,))
     result = cur.fetchone()
-    return render_template("translate.html", result=result)
+    return render_template("translate.html", word=result["word"], translation=result["translation"])
