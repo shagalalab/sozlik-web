@@ -17,10 +17,10 @@
 					<h1 class="rotate">sozlik.com</h1>
 					<span>Qaraqalpaqsha sózliker</span>
 					<div class="search-form-container">
-						<form action="#" method="POST">
-							<input type="text" name="" placeholder="Ízlegen sózińizdi kiritiń..." autofocus list="suggestions-datalist" id="searchbox" >
-							<input type="submit" value="izle">
-							<datalist id="suggestions-datalist"></datalist>
+						<form id="search_form">
+							<input type="text" name="" placeholder="Ízlegen sózińizdi kiritiń..." autofocus id="searchbox" >
+							<input type="submit" value="izle" id="search_button">
+							<div id="autocomplete"><ul></ul></div>
 						</form>
 					</div>
 				</div>
@@ -28,65 +28,72 @@
 		</div>
 	</div>
 	<div class="footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="menu-container clearfix">
-							<ul class="menu">
-								<!-- start menu links -->
-								<!-- replace the # with menu links -->
-								<li><a href="#">About</a></li>
-								<li><a href="#">Service</a></li>
-								<li><a href="#">Portfolio</a></li>
-								<li><a href="#">Contact</a></li>
-								<!-- end menu links -->
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="socila-container clearfix">
-							<ul class="social pull-right">
-								<!-- start social links -->
-								<!-- replace the # with your own profile link address -->
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-youtube"></i></a></li>
-								<li><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-flickr"></i></a></li>
-								<li><a href="#"><i class="fa fa-rss"></i></a></li>
-								<!-- end social links -->
-							</ul>
-						</div>
-						<div class="copyright pull-right">Copyright &copy; 2017 <a href="http://www.shagalalab.com">Shaǵala Lab</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="menu-container clearfix">
+                        <ul class="menu">
+                            <!-- start menu links -->
+                            <!-- replace the # with menu links -->
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Service</a></li>
+                            <li><a href="#">Portfolio</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <!-- end menu links -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="socila-container clearfix">
+                        <ul class="social pull-right">
+                            <!-- start social links -->
+                            <!-- replace the # with your own profile link address -->
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            <!-- end social links -->
+                        </ul>
+                    </div>
+                    <div class="copyright pull-right">Copyright &copy; 2017 <a href="http://www.shagalalab.com">Shaǵala Lab</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script>
 	$("#searchbox").on("input", function () {
 		var query = $(this).val();
 
+		var autocompletebox = $('div#autocomplete ul');
+
 		if (query.length > 1) {
-			if ($('#suggestions-datalist option').filter(function() { return this.value === query; }).length) {
-				window.location.href = "/translate/" + query;
-			} else {
-				var options = {};
-				options.url = "/api/suggestion/" + query;
-				options.type = "GET";
-				options.dataType = "json";
-				options.success = function (data) {
-					$("#suggestions-datalist").empty();
-					for(var i = 0; i < data.suggestions.length; i++) {
-						$("#suggestions-datalist").append("<option value='" + data.suggestions[i] + "'></option>");
-					}
+			var options = {};
+			options.url = "/api/suggestion/" + query;
+			options.type = "GET";
+			options.dataType = "json";
+			options.success = function (data) {
+				autocompletebox.empty();
+				for (var i = 0; i < data.suggestions.length; i++) {
+					var item = data.suggestions[i];
+					autocompletebox.append("<li value=" + i + "><a href ='/translate/" + item + "'>" + item + "</li>");
 				};
-				$.ajax(options);
-			}
+			};
+			$.ajax(options);
+		} else {
+		    autocompletebox.empty();
 		}
 	});
+
+	$("#search_button").click(function() {
+	    $("#search_form").attr('action', '/translate/' + $("#searchbox").val());
+	});
 </script>
+
 </body>
 </html>

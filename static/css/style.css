@@ -26,7 +26,7 @@ a:hover {
 }
 
 .page-text .rotate {
-	font-size: 7em;
+	font-size: 6em;
 	text-transform: uppercase;
 	margin-bottom: 10px;
 	margin-top: 0px;
@@ -36,10 +36,11 @@ a:hover {
 	text-transform: uppercase;
 }
 .search-form-container {
-	margin: 80px 0 50px;
+    width: 60%;
+    margin: 80px auto 50px auto;
 }
 .search-form-container input[type="text"] {
-	width: 60%;
+	width: 98%;
 	padding: 14px 60px 15px 30px;
 	border: none;
 	color: #17C3B9;
@@ -131,4 +132,35 @@ a:hover {
 .copyright {
 	margin: 0px 5px 15px;
 	font-size: .9em;
+}
+
+#autocomplete {
+    width: 98%;
+    background-color: #fff;
+    margin-left: 12px;
+}
+
+#autocomplete ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#autocomplete ul li {
+    text-align: left;
+}
+
+#autocomplete ul li:hover {
+    background-color: #f4f4f4;
+    text-decoration: none;
+}
+
+#autocomplete ul li a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 35px;
+    color: #17C3B9;
+    opacity: 1;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
 }
