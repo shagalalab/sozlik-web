@@ -1,5 +1,7 @@
+import re
 import sqlite3
-from flask import Flask, render_template, g, request, jsonify
+
+from flask import Flask, render_template, g, jsonify
 
 app = Flask(__name__)
 
@@ -26,31 +28,33 @@ def index():
     return render_template('index.html')
 
 
-# /api/translation/<word>
-@app.route("/api/translation/<search_word>")
-def api_get_translation(search_word):
-    cur = get_db().cursor()
-    cur.execute("select * from qqen where word = ?", (search_word,))
-    result = cur.fetchone()
-    return jsonify(id=result["id"], word=result["word"], translation=result["translation"])
-
-
 # /api/suggestion/<beginswith>
 @app.route("/api/suggestion/<beginswith>")
 def api_get_suggestion(beginswith):
+    beginswith = normalize_query(beginswith)
     cur = get_db().cursor()
     cur.execute("select word from qqen where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
-    data = []
-    for r in result:
-        data.append(r["word"])
-    return jsonify(suggestions=data)
+    if result:
+        data = []
+        for r in result:
+            data.append(r["word"])
+        return jsonify(suggestions=data)
 
 
 # /translate/<search_word>
 @app.route("/translate/<search_word>")
 def get_translate(search_word):
+    search_word = normalize_query(search_word)
+    print(search_word)
     cur = get_db().cursor()
     cur.execute("select * from qqen where word = ?", (search_word,))
     result = cur.fetchone()
-    return render_template("translate.html", word=result["word"], translation=result["translation"])
+    if result:
+        return render_template("translate.html", word=result["word"], translation=result["translation"])
+    else:
+        return render_template("notfound.html", word=search_word)
+
+
+def normalize_query(search_word):
+    return re.sub('[^a-z\-]', '', search_word.lower())
