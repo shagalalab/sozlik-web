@@ -67,7 +67,20 @@
     </div>
 
 <script>
-	$("#searchbox").on("input", function () {
+    function debounce(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			clearTimeout(timeout);
+			timeout = setTimeout(function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			}, wait);
+			if (immediate && !timeout) func.apply(context, args);
+		};
+	}
+
+	$("#searchbox").on("input", debounce(function () {
 		var query = $(this).val();
 
 		var autocompletebox = $('div#autocomplete ul');
@@ -88,7 +101,7 @@
 		} else {
 		    autocompletebox.empty();
 		}
-	});
+	}, 500));
 
 	$("#search_button").click(function() {
 	    $("#search_form").attr('action', '/translate/' + $("#searchbox").val());
