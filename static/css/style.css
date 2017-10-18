@@ -198,3 +198,13 @@ a:hover {
     display: block;
     text-decoration: none;
 }
+
+#did_you_mean ul {
+    list-style-type: none;
+}
+
+#did_you_mean ul li a {
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+}

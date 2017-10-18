@@ -5,6 +5,24 @@
         <div class="row">
             <div class="col-sm-12">
                 <h2>Keshirersiz, siz izlegen <strong>{{ word }}</strong> sóziniń awdarması tabılmadı</h2>
+
+                <div id="did_you_mean">
+                {% if did_you_mean %}
+                    <h4>
+                    {% if did_you_mean|length == 1 %}
+                        Bálkim siz tómendegi sózdi názerde tutqan shiǵarsız?
+                    {% else %}
+                        Bálkim siz tómendegi sózlerdiń birin názerde tutqan shiǵarsız?
+                    {% endif %}
+                    </h4>
+
+                    <ul>
+                        {% for word in did_you_mean %}
+                            <li><a href="/translate/{{word}}">{{word}}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                </div>
             </div>
         </div>
     </div>
