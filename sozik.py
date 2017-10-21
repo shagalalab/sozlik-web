@@ -1,13 +1,16 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import re
 import sqlite3
 
 from flask import Flask, render_template, g, jsonify
 
-from spell import candidates
+from util.spell import candidates
 
 app = Flask(__name__)
 
-DATABASE = '/Users/atabek/Projects/Flask/sozlik.com/sozlik/sozlik.db'
+DATABASE = app.root_path + '/db/sozlik.db'
 
 
 def get_db():
@@ -37,11 +40,11 @@ def api_get_suggestion(beginswith):
     cur = get_db().cursor()
     cur.execute("select word from qqen where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
+    data = []
     if result:
-        data = []
         for r in result:
             data.append(r["word"])
-        return jsonify(suggestions=data)
+    return jsonify(suggestions=data)
 
 
 # /translate/<search_word>
@@ -59,7 +62,7 @@ def get_translate(search_word):
 
 
 def normalize_query(search_word):
-    return re.sub('[^a-z\-]', '', search_word.lower())
+    return re.sub(u'[^a-záúıóǵńA-ZÁÚÍÓǴŃа-яёәүқөғңА-ЯЁӘҮҚӨҒҢ\-]', '', search_word.lower())
 
 
 def get_all_words():
@@ -71,3 +74,4 @@ def get_all_words():
         for r in result:
             data.append(r["word"])
     return data
+
