@@ -38,18 +38,17 @@ def index():
 def api_get_suggestion(beginswith):
     beginswith = normalize_query(beginswith)
     cur = get_db().cursor()
-    cur.execute("select word from dictionary where word like ? limit 10", (beginswith + '%',))
+    cur.execute("select * from dictionary where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
-    cur.execute("select type from dictionary where word like ? limit 10", (beginswith + '%',))
-    type_off = cur.fetchall()
     data = []
-    data1 = []
     if result:
         for r in result:
-            data.append(r["word"])
-        for t in type_off:
-            data1.append(t['type'])
-    return jsonify(suggestions=data, type=data1)
+            data.append({
+                'word': r['word'],
+                'type': r['type'],
+                'raw_word': r['raw_word']
+            })
+    return jsonify(suggestions=data)
 
 
 # /translate/<search_word>

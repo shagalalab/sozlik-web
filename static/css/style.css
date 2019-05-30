@@ -122,7 +122,6 @@ a:hover {
 }
 
 .social li a i {
-    color: white;
     border: 1px solid #17C3B9;
     padding: 10px 0;
     display: block;
@@ -158,11 +157,6 @@ a:hover {
     border-radius: 20px;
     text-transform: uppercase;
 }
-*{
-    margin: 0;
-    padding: 0;
-}
-
 
 .menu li a:hover {
     background: #17C3B9;
@@ -186,11 +180,9 @@ a:hover {
     padding: 0;
 }
 
-/*ul a li*/
 #autocomplete ul li {
     text-align: left;
     position: relative;
-    /*width: 100%;*/
 }
 
 .flag_right {
@@ -200,13 +192,7 @@ a:hover {
     display: block;
     height: 21.8px;
     width : 90px;
-
-
 }
-/*#autocomplete ul li span.flag_right img{*/
-/*    height: 21.8px;*/
-/*    width : 90px;*/
-/*}*/
 
 #autocomplete ul li:hover {
     background-color: #f4f4f4;
