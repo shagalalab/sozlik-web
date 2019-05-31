@@ -28,7 +28,7 @@ a:hover {
 
 .detail-word {
     background: #17C3B9;
-    padding: 60px 0;
+    padding: 35px 0;
 }
 
 .detail-translation {
@@ -36,6 +36,10 @@ a:hover {
     background: #FAFAFA;
     padding: 100px 0;
     color: #17C3B9;
+}
+
+.flag-tr img{
+    margin-top: 15px;
 }
 
 .page-text {
@@ -47,7 +51,7 @@ a:hover {
     font-size: 5em;
     text-transform: uppercase;
     margin-bottom: 10px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .page-text span {
@@ -187,7 +191,7 @@ a:hover {
 
 .flag_right {
     position: absolute;
-    right: 0;
+    right: 39px;
     top: 0;
     display: block;
     height: 21.8px;

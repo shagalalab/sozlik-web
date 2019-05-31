@@ -59,9 +59,9 @@ def get_translate(search_word):
     cur.execute("select * from dictionary where word = ?", (search_word,))
     result = cur.fetchone()
     if result and result["type"] == 1:
-        return render_template("translate.html", img_src="../static/images/qqen.png", word=result["word"], translation=result["translation"])
+        return render_template("translate.html", img_src="../static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
     elif result and result["type"] == 2:
-        return render_template("translate.html", img_src="../static/images/ruqq.png", word=result["word"], translation=result["translation"])
+        return render_template("translate.html", img_src="../static/images/ruqq.png", word=result["raw_word"], translation=result["translation"])
     else:
         did_you_mean = candidates(search_word, get_all_words())
         return render_template("notfound.html", word=search_word, did_you_mean=did_you_mean)
