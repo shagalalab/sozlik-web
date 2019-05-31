@@ -1,64 +1,72 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="main">
-    <div class="container page-text">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1 class="rotate">sozlik.com</h1>
-                <span>Qaraqalpaqsha sózlikler</span>
-                <div class="search-form-container">
-                    <form id="search_form">
-                        <input type="text" name="" placeholder="Ízlegen sózińizdi kiritiń..." autofocus id="searchbox" >
-                        <input type="submit" value="izle" id="search_button">
-                        <div id="autocomplete"><ul></ul></div>
-                    </form>
+    <div class="main">
+        <div class="container page-text">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="rotate">sozlik.com</h1>
+                    <span>Qaraqalpaqsha sózlikler</span>
+                    <div class="search-form-container">
+                        <form id="search_form">
+                            <input type="text" name="" placeholder="Ízlegen sózińizdi kiritiń..." autofocus
+                                   id="searchbox">
+                            <input type="submit" value="izle" id="search_button">
+                            <div id="autocomplete">
+                                <ul></ul>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block bottom_scripts %}
-<script>
-    function debounce(func, wait, immediate) {
-		var timeout;
-		return function() {
-			var context = this, args = arguments;
-			clearTimeout(timeout);
-			timeout = setTimeout(function() {
-				timeout = null;
-				if (!immediate) func.apply(context, args);
-			}, wait);
-			if (immediate && !timeout) func.apply(context, args);
-		};
-	}
+    <script>
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                }, wait);
+                if (immediate && !timeout) func.apply(context, args);
+            };
+        }
 
-	$("#searchbox").on("input", debounce(function () {
-		var query = $(this).val();
+        $("#searchbox").on("input", debounce(function () {
+            var query = $(this).val();
+            var autocompletebox = $('div#autocomplete ul');
+            if (query.length > 1) {
+                var options = {};
+                var flag_img = '/qqen.png';
+                options.url = "/api/suggestion/" + query;
+                options.type = "GET";
+                options.dataType = "json";
+                options.success = function (data) {
+                    autocompletebox.empty();
+                    for (var i = 0; i < data.suggestions.length; i++) {
+                        var item = data.suggestions[i];
+                        if (item['type'] == '1') {
+                            flag_img = '/qqen.png';
+                        }
+                        else if (item['type'] == '2'){
+                            flag_img = '/ruqq.png';
+                        }
+                        autocompletebox.append("<li value=" + i + "><a href ='/translate/" + item['word'] + "'>" + item['word'] + '<span class = "flag_right"><img src ="../static/images' + flag_img + '"height=21.8px;></span></li>');
+                    }
 
-		var autocompletebox = $('div#autocomplete ul');
-
-		if (query.length > 1) {
-			var options = {};
-			options.url = "/api/suggestion/" + query;
-			options.type = "GET";
-			options.dataType = "json";
-			options.success = function (data) {
-				autocompletebox.empty();
-				for (var i = 0; i < data.suggestions.length; i++) {
-					var item = data.suggestions[i];
-					autocompletebox.append("<li value=" + i + "><a href ='/translate/" + item + "'>" + item + "</li>");
-				};
-			};
-			$.ajax(options);
-		} else {
-		    autocompletebox.empty();
-		}
-	}, 500));
-
-	$("#search_button").click(function() {
-	    $("#search_form").attr('action', '/translate/' + $("#searchbox").val());
-	});
-</script>
+                };
+                $.ajax(options);
+            } else {
+                autocompletebox.empty();
+            }
+        }, 500));
+        $("#search_button").click(function () {
+            $("#search_form").attr('action', '/translate/' + $("#searchbox").val());
+        });
+    </script>
 {% endblock %}

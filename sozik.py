@@ -38,12 +38,16 @@ def index():
 def api_get_suggestion(beginswith):
     beginswith = normalize_query(beginswith)
     cur = get_db().cursor()
-    cur.execute("select word from qqen where word like ? limit 10", (beginswith + '%',))
+    cur.execute("select * from dictionary where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
     data = []
     if result:
         for r in result:
-            data.append(r["word"])
+            data.append({
+                'word': r['word'],
+                'type': r['type'],
+                'raw_word': r['raw_word']
+            })
     return jsonify(suggestions=data)
 
 
@@ -52,10 +56,12 @@ def api_get_suggestion(beginswith):
 def get_translate(search_word):
     search_word = normalize_query(search_word)
     cur = get_db().cursor()
-    cur.execute("select * from qqen where word = ?", (search_word,))
+    cur.execute("select * from dictionary where word = ?", (search_word,))
     result = cur.fetchone()
-    if result:
-        return render_template("translate.html", word=result["word"], translation=result["translation"])
+    if result and result["type"] == 1:
+        return render_template("translate.html", img_src="../static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
+    elif result and result["type"] == 2:
+        return render_template("translate.html", img_src="../static/images/ruqq.png", word=result["raw_word"], translation=result["translation"])
     else:
         did_you_mean = candidates(search_word, get_all_words())
         return render_template("notfound.html", word=search_word, did_you_mean=did_you_mean)
@@ -68,10 +74,9 @@ def normalize_query(search_word):
 def get_all_words():
     data = []
     cur = get_db().cursor()
-    cur.execute("select word from qqen")
+    cur.execute("select word from dictionary")
     result = cur.fetchall()
     if result:
         for r in result:
             data.append(r["word"])
     return data
-
