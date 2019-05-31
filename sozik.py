@@ -40,24 +40,28 @@ def api_get_suggestion(beginswith):
     cur = get_db().cursor()
     cur.execute("select * from dictionary where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
+    print(result)
     data = []
     if result:
         for r in result:
             data.append({
                 'word': r['word'],
                 'type': r['type'],
-                'raw_word': r['raw_word']
+                'raw_word': r['raw_word'],
+                'id': r['id']
             })
     return jsonify(suggestions=data)
 
 
-# /translate/<search_word>
-@app.route("/translate/<search_word>")
-def get_translate(search_word):
-    search_word = normalize_query(search_word)
+# /translate/<search_wordid>
+@app.route("/translate/<search_wordid>")
+def get_translate(search_wordid):
     cur = get_db().cursor()
-    cur.execute("select * from dictionary where word = ?", (search_word,))
+    cur.execute("select * from dictionary where id = ?", (int(search_wordid),))
     result = cur.fetchone()
+    print(result)
+    search_word = result['word']
+    search_word = normalize_query(search_word)
     if result and result["type"] == 1:
         return render_template("translate.html", img_src="../static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
     elif result and result["type"] == 2:
