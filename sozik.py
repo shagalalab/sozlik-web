@@ -40,7 +40,6 @@ def api_get_suggestion(beginswith):
     cur = get_db().cursor()
     cur.execute("select * from dictionary where word like ? limit 10", (beginswith + '%',))
     result = cur.fetchall()
-    print(result)
     data = []
     if result:
         for r in result:
@@ -53,19 +52,23 @@ def api_get_suggestion(beginswith):
     return jsonify(suggestions=data)
 
 
-# /translate/<search_wordid>
-@app.route("/translate/<search_wordid>")
-def get_translate(search_wordid):
+# /translate/<type_word>/<search_word>
+@app.route("/translate/<type_word>/<search_word>")
+def get_translate(type_word, search_word):
+    search_word = normalize_query(search_word)
+    if type_word == 'qqen':
+        type_word = 1
+    elif type_word == 'ruqq':
+        type_word = 2
+    print(type_word)
     cur = get_db().cursor()
-    cur.execute("select * from dictionary where id = ?", (int(search_wordid),))
+    cur.execute("select * from dictionary where word = ? AND type = ?", [search_word, type_word])
     result = cur.fetchone()
     print(result)
-    search_word = result['word']
-    search_word = normalize_query(search_word)
     if result and result["type"] == 1:
-        return render_template("translate.html", img_src="../static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
+        return render_template("translate.html", img_src="static/images/qqen.png", word=result['raw_word'], translation=result["translation"])
     elif result and result["type"] == 2:
-        return render_template("translate.html", img_src="../static/images/ruqq.png", word=result["raw_word"], translation=result["translation"])
+        return render_template("translate.html", img_src="static/images/ruqq.png", word=result['raw_word'], translation=result["translation"])
     else:
         did_you_mean = candidates(search_word, get_all_words())
         return render_template("notfound.html", word=search_word, did_you_mean=did_you_mean)
