@@ -46,22 +46,27 @@ def api_get_suggestion(beginswith):
             data.append({
                 'word': r['word'],
                 'type': r['type'],
-                'raw_word': r['raw_word']
+                'raw_word': r['raw_word'],
+                'id': r['id']
             })
     return jsonify(suggestions=data)
 
 
-# /translate/<search_word>
-@app.route("/translate/<search_word>")
-def get_translate(search_word):
+# /translate/<dictionary_type>/<search_word>
+@app.route("/translate/<dictionary_type>/<search_word>")
+def get_translate(dictionary_type, search_word):
     search_word = normalize_query(search_word)
+    if dictionary_type == 'qqen':
+        dictionary_id = 1
+    elif dictionary_type == 'ruqq':
+        dictionary_id = 2
     cur = get_db().cursor()
-    cur.execute("select * from dictionary where word = ?", (search_word,))
+    cur.execute("select * from dictionary where word = ? AND type = ?", [search_word, dictionary_id])
     result = cur.fetchone()
     if result and result["type"] == 1:
-        return render_template("translate.html", img_src="../static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
+        return render_template("translate.html", img_src="/static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
     elif result and result["type"] == 2:
-        return render_template("translate.html", img_src="../static/images/ruqq.png", word=result["raw_word"], translation=result["translation"])
+        return render_template("translate.html", img_src="/static/images/ruqq.png", word=result["raw_word"], translation=result["translation"])
     else:
         did_you_mean = candidates(search_word, get_all_words())
         return render_template("notfound.html", word=search_word, did_you_mean=did_you_mean)

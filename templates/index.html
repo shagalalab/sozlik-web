@@ -43,6 +43,7 @@
             if (query.length > 1) {
                 var options = {};
                 var flag_img = '/qqen.png';
+                var dictionary_type;
                 options.url = "/api/suggestion/" + query;
                 options.type = "GET";
                 options.dataType = "json";
@@ -52,11 +53,13 @@
                         var item = data.suggestions[i];
                         if (item['type'] == '1') {
                             flag_img = '/qqen.png';
+                            dictionary_type = 'qqen';
                         }
                         else if (item['type'] == '2'){
                             flag_img = '/ruqq.png';
+                            dictionary_type = 'ruqq';
                         }
-                        autocompletebox.append("<li value=" + i + "><a href ='/translate/" + item['word'] + "'>" + item['word'] + '<span class = "flag_right"><img src ="../static/images' + flag_img + '"height=21.8px;></span></li>');
+                        autocompletebox.append("<li value=" + i + "><a href ='/translate/" + dictionary_type + '/' + item['word'] + "'>" + item['word'] + '<span class = "flag_right"><img src ="static/images' + flag_img + '"height=21.8px;></span></li>');
                     }
 
                 };
