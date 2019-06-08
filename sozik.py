@@ -52,16 +52,16 @@ def api_get_suggestion(beginswith):
     return jsonify(suggestions=data)
 
 
-# /translate/<dictionary_word>/<search_word>
-@app.route("/translate/<dictionary_word>/<search_word>")
-def get_translate(dictionary_word, search_word):
+# /translate/<dictionary_type>/<search_word>
+@app.route("/translate/<dictionary_type>/<search_word>")
+def get_translate(dictionary_type, search_word):
     search_word = normalize_query(search_word)
-    if dictionary_word == 'qqen':
-        word_type = 1
-    elif dictionary_word == 'ruqq':
-        word_type = 2
+    if dictionary_type == 'qqen':
+        dictionary_id = 1
+    elif dictionary_type == 'ruqq':
+        dictionary_id = 2
     cur = get_db().cursor()
-    cur.execute("select * from dictionary where word = ? AND type = ?", [search_word, word_type])
+    cur.execute("select * from dictionary where word = ? AND type = ?", [search_word, dictionary_id])
     result = cur.fetchone()
     if result and result["type"] == 1:
         return render_template("translate.html", img_src="/static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
