@@ -53,6 +53,7 @@ def api_get_suggestion(beginswith):
 
 
 # /translate/<dictionary_type>/<search_word>
+@app.route("/translate/<search_word>", defaults={'dictionary_type': ''})
 @app.route("/translate/<dictionary_type>/<search_word>")
 def get_translate(dictionary_type, search_word):
     search_word = normalize_query(search_word)
