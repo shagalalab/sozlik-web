@@ -56,12 +56,16 @@ def api_get_suggestion(beginswith):
 @app.route("/translate/<dictionary_type>/<search_word>")
 def get_translate(dictionary_type, search_word):
     search_word = normalize_query(search_word)
+    dictionary_id = None
     if dictionary_type == 'qqen':
         dictionary_id = 1
     elif dictionary_type == 'ruqq':
         dictionary_id = 2
     cur = get_db().cursor()
-    cur.execute("select * from dictionary where word = ? AND type = ?", [search_word, dictionary_id])
+    if dictionary_id:
+        cur.execute("select * from dictionary where word = ? AND type = ?", (search_word, dictionary_id))
+    else:
+        cur.execute("select * from dictionary where word = ?", (search_word,))
     result = cur.fetchone()
     if result and result["type"] == 1:
         return render_template("translate.html", img_src="/static/images/qqen.png", word=result["raw_word"], translation=result["translation"])
